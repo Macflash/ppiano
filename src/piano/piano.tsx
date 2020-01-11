@@ -17,11 +17,11 @@ export const Piano: React.FC = props => {
                 zIndex: step === "W" ? 2 : 3,
                 marginRight: step === "W" ? -1 : `calc(-${25 / whiteNum}% - 1px)`,
                 marginLeft: step === "W" ? undefined : `calc(-${25 / whiteNum}% - 1px)`,
-                height: step === "W" ? 150 : 100,
+                height: step === "W" ? "100%" : "65%",
             }}></div>));
     }
 
-    return <div style={{ display: "flex", flexDirection: "row", padding: 15, justifyContent: "center" }}>
+    return <div style={{ display: "flex", flexDirection: "row", padding: 15, justifyContent: "center", maxHeight: "20vw", minHeight: "50px", flex: "auto" }}>
         {bed}
     </div>
 }
