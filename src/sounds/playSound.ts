@@ -43,6 +43,42 @@ export const playPiano = (note: Note) => {
         case 71:
             sound = B3_Piano;
             break;
+        case 72:
+            sound = C4_Piano;
+            break;
+        case 73:
+            sound = Db4_Piano;
+            break;
+        case 74:
+            sound = D4_Piano;
+            break;
+        case 75:
+            sound = Eb4_Piano;
+            break;
+        case 76:
+            sound = E4_Piano;
+            break;
+        case 77:
+            sound = F4_Piano;
+            break;
+        case 78:
+            sound = Gb4_Piano;
+            break;
+        case 79:
+            sound = G4_Piano;
+            break;
+        case 80:
+            sound = Ab4_Piano;
+            break;
+        case 81:
+            sound = A4_Piano;
+            break;
+        case 82:
+            sound = Bb4_Piano;
+            break;
+        case 83:
+            sound = B4_Piano;
+            break;
     }
 
     playSound(sound);
@@ -71,3 +107,16 @@ const Ab3_Piano = require("./Piano/Ab3_Piano.wav");
 const A3_Piano = require("./Piano/A3_Piano.wav");
 const Bb3_Piano = require("./Piano/Bb3_Piano.wav");
 const B3_Piano = require("./Piano/B3_Piano.wav");
+
+const C4_Piano = require("./Piano/C4_Piano.wav");
+const Db4_Piano = require("./Piano/Db4_Piano.wav");
+const D4_Piano = require("./Piano/D4_Piano.wav");
+const Eb4_Piano = require("./Piano/Eb4_Piano.wav");
+const E4_Piano = require("./Piano/E4_Piano.wav");
+const F4_Piano = require("./Piano/F4_Piano.wav");
+const Gb4_Piano = require("./Piano/Gb4_Piano.wav");
+const G4_Piano = require("./Piano/G4_Piano.wav");
+const Ab4_Piano = require("./Piano/Ab4_Piano.wav");
+const A4_Piano = require("./Piano/A4_Piano.wav");
+const Bb4_Piano = require("./Piano/Bb4_Piano.wav");
+const B4_Piano = require("./Piano/B4_Piano.wav");

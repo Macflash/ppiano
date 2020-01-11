@@ -24,7 +24,7 @@ export const SimpleClickerPianoIdentifier: React.FC = () => {
                 setChord({ ...chord, [note]: !chord[note] })
             }
             } />
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: "none", padding: 10 }}>
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", flex: "none", paddingRight: 10 }}>
                 <button onClick={() => setChord({})} > Reset</button>
             </div>
         </div>
