@@ -3,7 +3,7 @@ import { PianoChord, Note } from '../notes/note';
 
 type Key = "W" | "B";
 
-export const Piano: React.FC<{ chord?: PianoChord, onNoteClicked?: (note: Note) => void }> = props => {
+export const Piano: React.FC<{ chord?: PianoChord, onNoteClicked?: (note: Note) => void, flex?: "none" | "auto" }> = props => {
     const baseNote = 60; // Middle C. This is hack and should be adjustable
     const octaves = 2;
     const steps: Key[] = ["W", "B", "W", "B", "W", "W", "B", "W", "B", "W", "B", "W"];
@@ -32,7 +32,7 @@ export const Piano: React.FC<{ chord?: PianoChord, onNoteClicked?: (note: Note) 
         }));
     }
 
-    return <div style={{ display: "flex", flexDirection: "row", padding: 15, justifyContent: "center", height: "20vw", minHeight: "50px", flex: "none" }}>
+    return <div style={{ display: "flex", flexDirection: "row", padding: 15, justifyContent: "center", height: "20vw", minHeight: "50px", flex: props.flex || "none" }}>
         {bed}
     </div>
 }
