@@ -14,7 +14,7 @@ export const Piano: React.FC<PianoProps> = props => {
         for (let i = 0; i < octaves; i++) {
             bed.push(...steps.map((key, k) => {
                 let note: Note = baseNote + (i * 12) + k;
-                return <PianoKey note={note} keyType={key} width={bedLength} selected={chord?.[note]} onNoteClicked={onNoteClicked} />
+                return <PianoKey key={note} note={note} keyType={key} width={bedLength} selected={chord?.[note]} onNoteClicked={onNoteClicked} />
             }));
         }
 
