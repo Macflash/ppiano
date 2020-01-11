@@ -50,8 +50,14 @@ export const SimpleClickerPianoIdentifier: React.FC = () => {
     );
 }
 
-const PianoBed: React.FC<{ index: number, chord: PianoChord, setChordAtIndex: (index: number, newChord: PianoChord) => void }> = props => {
-    const { index, chord, setChordAtIndex } = props;
+const PianoBed: React.FC<{
+    index: number,
+    chord: PianoChord,
+    setChordAtIndex: (index: number, newChord: PianoChord) => void,
+    deleteChordAtIndex: (index: number) => void,
+}> = props => {
+    const { index, chord, setChordAtIndex, deleteChordAtIndex } = props;
+    const deleteChord = React.useCallback(() => deleteChordAtIndex(index), [deleteChordAtIndex, index]);
     const setChord = React.useCallback((newChord: PianoChord) => setChordAtIndex(index, newChord), [setChordAtIndex, index]);
     const { noteClick, play, reset } = useChordEvents(chord, setChord);
     return (
@@ -60,6 +66,7 @@ const PianoBed: React.FC<{ index: number, chord: PianoChord, setChordAtIndex: (i
             <div style={{ width: 80, display: "flex", flexDirection: "column", justifyContent: "center", flex: "none", paddingRight: 10 }}>
                 <button onClick={play}>Play</button>
                 <button onClick={reset}>Reset</button>
+                <button onClick={deleteChord}>Delete</button>
                 {standardize(chord).map(getNoteName).join(", ")}<br />
                 {lookupChord(chord).join(", ")}
             </div>
@@ -70,6 +77,14 @@ const PianoBed: React.FC<{ index: number, chord: PianoChord, setChordAtIndex: (i
 export const PianoProgression: React.FC = props => {
     const [chords, setChords] = React.useState<PianoChord[]>([]);
 
+    const deleteChordAtIndex = React.useCallback((index: number) => {
+        setChords(currentChords => {
+            let newChords = [...currentChords];
+            newChords.splice(index, 1);
+            return newChords;
+        })
+    }, [setChords]);
+
     const setChordAtIndex = React.useCallback((index: number, newChord: PianoChord) => {
         setChords(currentChords => {
             let newChords = [...currentChords];
@@ -79,7 +94,7 @@ export const PianoProgression: React.FC = props => {
     }, [setChords]);
 
     return <>
-        {chords.map((chord, index) => <PianoBed key={index} index={index} chord={chord} setChordAtIndex={setChordAtIndex} />)}
+        {chords.map((chord, index) => <PianoBed key={index} index={index} chord={chord} setChordAtIndex={setChordAtIndex} deleteChordAtIndex={deleteChordAtIndex} />)}
         <div>
             <button onClick={() => { setChords(c => ([...c, {}])) }}>Add chord</button>
         </div>
