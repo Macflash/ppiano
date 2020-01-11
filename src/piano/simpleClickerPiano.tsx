@@ -1,5 +1,5 @@
 import React from 'react';
-import { PianoChord, CommonChords, chordsAreEqual, lookupChord, standardize } from '../notes/note';
+import { PianoChord, CommonChords, chordsAreEqual, lookupChord, standardize, getNoteName } from '../notes/note';
 import { Piano } from './piano';
 import { playPiano } from '../sounds/playSound';
 
@@ -33,7 +33,7 @@ export const SimpleClickerPianoIdentifier: React.FC = () => {
             }} />
             <div style={{ minWidth: 80, display: "flex", flexDirection: "column", justifyContent: "center", flex: "none", paddingRight: 10 }}>
                 <button onClick={() => setChord({})}>Reset</button>
-                {standardize(chord).join(", ")}<br />
+                {standardize(chord).map(getNoteName).join(", ")}<br />
                 {lookupChord(chord).join(", ")}
             </div>
         </div>
