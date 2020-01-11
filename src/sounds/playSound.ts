@@ -5,83 +5,88 @@ export interface Instrument {
 }
 
 export const playPiano = (note: Note) => {
-    let sound = Pfft;
-    switch (note) {
-        case 60:
-            sound = C3_Piano;
-            break;
-        case 61:
-            sound = Db3_Piano;
-            break;
-        case 62:
-            sound = D3_Piano;
-            break;
-        case 63:
-            sound = Eb3_Piano;
-            break;
-        case 64:
-            sound = E3_Piano;
-            break;
-        case 65:
-            sound = F3_Piano;
-            break;
-        case 66:
-            sound = Gb3_Piano;
-            break;
-        case 67:
-            sound = G3_Piano;
-            break;
-        case 68:
-            sound = Ab3_Piano;
-            break;
-        case 69:
-            sound = A3_Piano;
-            break;
-        case 70:
-            sound = Bb3_Piano;
-            break;
-        case 71:
-            sound = B3_Piano;
-            break;
-        case 72:
-            sound = C4_Piano;
-            break;
-        case 73:
-            sound = Db4_Piano;
-            break;
-        case 74:
-            sound = D4_Piano;
-            break;
-        case 75:
-            sound = Eb4_Piano;
-            break;
-        case 76:
-            sound = E4_Piano;
-            break;
-        case 77:
-            sound = F4_Piano;
-            break;
-        case 78:
-            sound = Gb4_Piano;
-            break;
-        case 79:
-            sound = G4_Piano;
-            break;
-        case 80:
-            sound = Ab4_Piano;
-            break;
-        case 81:
-            sound = A4_Piano;
-            break;
-        case 82:
-            sound = Bb4_Piano;
-            break;
-        case 83:
-            sound = B4_Piano;
-            break;
-    }
+    try {
+        let sound = Pfft;
+        switch (note) {
+            case 60:
+                sound = C3_Piano;
+                break;
+            case 61:
+                sound = Db3_Piano;
+                break;
+            case 62:
+                sound = D3_Piano;
+                break;
+            case 63:
+                sound = Eb3_Piano;
+                break;
+            case 64:
+                sound = E3_Piano;
+                break;
+            case 65:
+                sound = F3_Piano;
+                break;
+            case 66:
+                sound = Gb3_Piano;
+                break;
+            case 67:
+                sound = G3_Piano;
+                break;
+            case 68:
+                sound = Ab3_Piano;
+                break;
+            case 69:
+                sound = A3_Piano;
+                break;
+            case 70:
+                sound = Bb3_Piano;
+                break;
+            case 71:
+                sound = B3_Piano;
+                break;
+            case 72:
+                sound = C4_Piano;
+                break;
+            case 73:
+                sound = Db4_Piano;
+                break;
+            case 74:
+                sound = D4_Piano;
+                break;
+            case 75:
+                sound = Eb4_Piano;
+                break;
+            case 76:
+                sound = E4_Piano;
+                break;
+            case 77:
+                sound = F4_Piano;
+                break;
+            case 78:
+                sound = Gb4_Piano;
+                break;
+            case 79:
+                sound = G4_Piano;
+                break;
+            case 80:
+                sound = Ab4_Piano;
+                break;
+            case 81:
+                sound = A4_Piano;
+                break;
+            case 82:
+                sound = Bb4_Piano;
+                break;
+            case 83:
+                sound = B4_Piano;
+                break;
+        }
 
-    playSound(sound);
+        playSound(sound);
+    }
+    catch {
+        console.error("couldn't play note " + note);
+    }
 }
 
 export const playSound = (sound: any) => {
