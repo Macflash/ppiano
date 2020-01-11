@@ -1,10 +1,14 @@
-import { Note } from "../notes/note";
+import { Note, PianoChord } from "../notes/note";
 
 export interface Instrument {
     playSound(note: Note): void
 }
 
-export const playPiano = (note: Note) => {
+export const playChord = (chord: PianoChord) => {
+    Object.keys(chord).map(note => parseInt(note)).forEach(playNote);
+}
+
+export const playNote = (note: Note) => {
     try {
         let sound = Pfft;
         switch (note) {
@@ -93,6 +97,9 @@ export const playSound = (sound: any) => {
     var audio = new Audio(sound);
     audio.volume = .5;
     audio.play();
+    setTimeout(() => {
+        audio.remove();
+    }, 3000);
 }
 
 // MISC
