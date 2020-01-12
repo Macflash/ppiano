@@ -15,11 +15,33 @@ function useChordEvents(chord: PianoChord, setChord: SetChord) {
     const play = React.useCallback(() => playChord(chord), [chord]);
     const noteClick = React.useCallback<onNoteClicked>(notes => {
         let newChord = { ...chord };
-        notes.forEach(note => {
-            newChord[note] = !chord[note];
-            if (!chord[note]) playNote(note);
-            else delete newChord[note];
-        });
+
+        // if multiple notes, we should only do DRAG action.
+        // EG the start is selected, the end is NOT selected, then switch
+        // otherwise NO change to initial
+        if(notes.length == 2){
+            // order is TARGET then initial
+            if(newChord[notes[1]] && !newChord[notes[0]]){
+                // switch then
+                playNote(notes[0]);
+                newChord[notes[0]] = true;
+                delete newChord[notes[1]];
+            }
+            else{
+                // just play the notes
+                playNote(notes[0]);
+                playNote(notes[1]);
+            }
+        }
+        // all other cases just toggle each note!
+        else {
+            notes.forEach(note => {
+                newChord[note] = !chord[note];
+                if (!chord[note]) playNote(note);
+                else delete newChord[note];
+            });
+        }
+        
 
         setChord(newChord);
     }, [setChord, chord]);

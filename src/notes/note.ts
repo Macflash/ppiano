@@ -43,7 +43,7 @@ export function MajorChord(root: Note): NamedChord {
 }
 
 export function MinorChord(root: Note): NamedChord {
-    return createChord("min", root, [majorThird, fifth]);
+    return createChord("min", root, [minorThird, fifth]);
 }
 
 export function DiminishedChord(root: Note): NamedChord {
