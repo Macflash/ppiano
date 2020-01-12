@@ -37,6 +37,7 @@ function createChord(type: string, root: Note, intervals: Interval[]): NamedChor
     }
 }
 
+// TRIADS
 export function MajorChord(root: Note): NamedChord {
     return createChord("maj", root, [majorThird, fifth]);
 }
@@ -48,6 +49,9 @@ export function MinorChord(root: Note): NamedChord {
 export function DiminishedChord(root: Note): NamedChord {
     return createChord("dim", root, [minorThird, diminishedFifth]);
 }
+
+// QUADS
+// Sevenths
 
 export function DominantSevenChord(root: Note): NamedChord {
     return createChord("dom7", root, [majorThird, fifth, minorSeventh]);
@@ -63,6 +67,16 @@ export function MajorSevenChord(root: Note): NamedChord {
 
 export function MinorMajorSevenChord(root: Note): NamedChord {
     return createChord("minmaj7", root, [minorThird, fifth, majorSeventh]);
+}
+
+// Sixths
+
+export function MajorSixthChord(root: Note): NamedChord {
+    return createChord("6", root, [majorThird, fifth, majorSixth]);
+}
+
+export function MinorSixthChord(root: Note): NamedChord {
+    return createChord("min6", root, [minorThird, fifth, majorSixth]);
 }
 
 export function toPianoChord(chord: Chord): PianoChord {
@@ -95,32 +109,8 @@ export function lookupChord(pianoChord: PianoChord | Chord) {
 }
 
 export function getNoteName(note: Note) {
-    switch (note % 12) {
-        case 0:
-            return "C";
-        case 1:
-            return "Db";
-        case 2:
-            return "D";
-        case 3:
-            return "Eb";
-        case 4:
-            return "E";
-        case 5:
-            return "F";
-        case 6:
-            return "Gb";
-        case 7:
-            return "G";
-        case 8:
-            return "Ab";
-        case 9:
-            return "A";
-        case 10:
-            return "B";
-        case 11:
-            return "Bb";
-    }
+    const notes = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+    return notes[note % 12];
 }
 
 export const CommonChords: NamedChord[] = [];
@@ -132,5 +122,7 @@ for (let i = 0; i < 12; i++) {
     CommonChords.push(MinorSevenChord(i));
     CommonChords.push(MajorSevenChord(i));
     CommonChords.push(MinorMajorSevenChord(i));
+    CommonChords.push(MinorSixthChord(i));
+    CommonChords.push(MajorSixthChord(i));
 }
 console.log(CommonChords);
