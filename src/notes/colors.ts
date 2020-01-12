@@ -2,6 +2,16 @@ import { Note, PianoChord } from "./note";
 
 // create a color from a given note
 
+export function getIntervalColor(a: Note, b: Note) {
+    // for now just like get the "root" chord? E.G. the first one...
+    let interval = (b - a) % 12;
+    if (interval < 0) {
+        interval += 12;
+    }
+
+    return getNoteColor(interval);
+}
+
 export function getChordColor(chord: PianoChord) {
     // for now just like get the "root" chord? E.G. the first one...
     let notes = Object.keys(chord).map(key => parseInt(key));

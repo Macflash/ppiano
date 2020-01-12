@@ -1,9 +1,10 @@
 import React from 'react';
 import { PianoChord, Note } from '../notes/note';
+import { playNote } from '../sounds/playSound';
 
 /** Piano Bed Component */
 export const Piano: React.FC<PianoProps> = props => {
-    const { onNoteClicked, flex, chord , color} = props;
+    const { onNoteClicked, flex, chord, color } = props;
     const baseNote = 60; // Middle C. This is hack and should be adjustable
     const octaves = 2;
     const steps: Key[] = ["W", "B", "W", "B", "W", "W", "B", "W", "B", "W", "B", "W"];
@@ -14,7 +15,15 @@ export const Piano: React.FC<PianoProps> = props => {
         for (let i = 0; i < octaves; i++) {
             bed.push(...steps.map((key, k) => {
                 let note: Note = baseNote + (i * 12) + k;
-                return <PianoKey key={note} selectedColor={color} note={note} keyType={key} width={bedLength} selected={chord?.[note]} onNoteClicked={onNoteClicked} />
+                return <PianoKey
+                    key={note}
+                    selectedColor={color}
+                    note={note}
+                    keyType={key}
+                    width={bedLength}
+                    selected={chord?.[note]}
+                    onNoteClicked={onNoteClicked}
+                />
             }));
         }
 
@@ -35,6 +44,8 @@ export const Piano: React.FC<PianoProps> = props => {
         {keys}
     </div>
 }
+
+let lastDragOver = 0;
 
 /** Piano Key Component */
 export const PianoKey: React.FC<PianoKeyProps> = props => {
@@ -66,16 +77,25 @@ export const PianoKey: React.FC<PianoKeyProps> = props => {
         marginRight: keyType === "W" ? -2 : `calc(-${25 / width}% - 1.5px)`,
         marginLeft: keyType === "W" ? undefined : `calc(-${25 / width}% - 1.5px)`,
         height: keyType === "W" ? "100%" : "65%",
-    }), [width, keyType, selected]);
+    }), [width, keyType, selected, selectedColor]);
+
+    const onDragOver = React.useCallback((ev: React.DragEvent<HTMLDivElement>) => {
+        ev.preventDefault();
+        ev.dataTransfer.dropEffect = "move";
+        if (note !== lastDragOver) {
+            playNote(note);
+            lastDragOver = note;
+        }
+    }, [note]);
 
     return <div
         key={note}
         className="pianoKey"
         style={style}
         onClick={onClick}
-        draggable={!!onNoteClicked}
+        draggable
         onDragStart={onDragStart}
-        onDragOver={onDragOverMovableArea}
+        onDragOver={onDragOver}
         onDrop={onDrop}
     ></div>
 }

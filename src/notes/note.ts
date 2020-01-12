@@ -15,34 +15,54 @@ export interface NamedChord {
 }
 
 export type Interval = number;
+const minorSecond = 1;
+const majorSecond = 2;
 const minorThird = 3;
 const majorThird = 4;
+const fourth = 5;
+const diminishedFifth = 6;
+const augmentedFourth = diminishedFifth;
+const tritone = diminishedFifth;
 const fifth = 7;
+const minorSixth = 8;
+const majorSixth = 9;
+const minorSeventh = 10;
+const majorSeventh = 11;
+const octave = 12;
 
-export function upMinorThird(note: Note): Note {
-    return note + minorThird;
-}
-
-export function upMajorThird(note: Note): Note {
-    return note + majorThird;
-}
-
-export function upFifth(note: Note): Note {
-    return note + fifth;
+function createChord(type: string, root: Note, intervals: Interval[]): NamedChord {
+    return {
+        name: `${getNoteName(root)} ${type}`,
+        chord: standardize([root, ...intervals.map(i => root + i)])
+    }
 }
 
 export function MajorChord(root: Note): NamedChord {
-    return {
-        name: `${getNoteName(root)} Major`,
-        chord: standardize([root, upMajorThird(root), upFifth(root)])
-    };
+    return createChord("maj", root, [majorThird, fifth]);
 }
 
 export function MinorChord(root: Note): NamedChord {
-    return {
-        name: `${getNoteName(root)} Minor`,
-        chord: standardize([root, upMinorThird(root), upFifth(root)])
-    };
+    return createChord("min", root, [majorThird, fifth]);
+}
+
+export function DiminishedChord(root: Note): NamedChord {
+    return createChord("dim", root, [minorThird, diminishedFifth]);
+}
+
+export function DominantSevenChord(root: Note): NamedChord {
+    return createChord("dom7", root, [majorThird, fifth, minorSeventh]);
+}
+
+export function MinorSevenChord(root: Note): NamedChord {
+    return createChord("min7", root, [minorThird, fifth, minorSeventh]);
+}
+
+export function MajorSevenChord(root: Note): NamedChord {
+    return createChord("maj7", root, [majorThird, fifth, majorSeventh]);
+}
+
+export function MinorMajorSevenChord(root: Note): NamedChord {
+    return createChord("minmaj7", root, [minorThird, fifth, majorSeventh]);
 }
 
 export function toPianoChord(chord: Chord): PianoChord {
@@ -107,5 +127,10 @@ export const CommonChords: NamedChord[] = [];
 for (let i = 0; i < 12; i++) {
     CommonChords.push(MajorChord(i));
     CommonChords.push(MinorChord(i));
+    CommonChords.push(DiminishedChord(i));
+    CommonChords.push(DominantSevenChord(i));
+    CommonChords.push(MinorSevenChord(i));
+    CommonChords.push(MajorSevenChord(i));
+    CommonChords.push(MinorMajorSevenChord(i));
 }
 console.log(CommonChords);

@@ -86,7 +86,7 @@ const PianoBed: React.FC<{
 }
 
 export const PianoProgression: React.FC = props => {
-    const [chords, setChords] = React.useState<PianoChord[]>([]);
+    const [chords, setChords] = React.useState<PianoChord[]>([{}]);
 
     const deleteChordAtIndex = React.useCallback((index: number) => {
         setChords(currentChords => {
