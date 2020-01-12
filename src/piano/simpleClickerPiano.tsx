@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PianoChord, lookupChord, standardize, getNoteName } from '../notes/note';
 import { Piano, onNoteClicked } from './piano';
 import { playNote, playChord } from '../sounds/playSound';
+import { getChordColor } from '../notes/colors';
 
 function usePianoChord() {
     const [chord, setChord] = React.useState<PianoChord>({});
@@ -61,14 +62,24 @@ const PianoBed: React.FC<{
     const setChord = React.useCallback((newChord: PianoChord) => setChordAtIndex(index, newChord), [setChordAtIndex, index]);
     const { noteClick, play, reset } = useChordEvents(chord, setChord);
     return (
-        <div key={index} style={{ display: "flex", flexDirection: "row" }}>
-            <Piano flex="auto" chord={chord} onNoteClicked={noteClick} />
+        <div
+            key={index}
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                border: "1px solid black",
+                backgroundColor: getChordColor(chord)
+            }}
+        >
+            <Piano flex="auto" chord={chord} onNoteClicked={noteClick} color={getChordColor(chord)}/>
             <div style={{ width: 80, display: "flex", flexDirection: "column", justifyContent: "center", flex: "none", paddingRight: 10 }}>
                 <button onClick={play}>Play</button>
                 <button onClick={reset}>Reset</button>
                 <button onClick={deleteChord}>Delete</button>
-                {standardize(chord).map(getNoteName).join(", ")}<br />
-                {lookupChord(chord).join(", ")}
+                <b>
+                    {standardize(chord).map(getNoteName).join(", ")}<br />
+                    {lookupChord(chord).join(", ")}
+                </b>
             </div>
         </div>
     );
@@ -94,7 +105,9 @@ export const PianoProgression: React.FC = props => {
     }, [setChords]);
 
     return <>
-        {chords.map((chord, index) => <PianoBed key={index} index={index} chord={chord} setChordAtIndex={setChordAtIndex} deleteChordAtIndex={deleteChordAtIndex} />)}
+        <div style={{ border: "1px solid black" }}>
+            {chords.map((chord, index) => <PianoBed key={index} index={index} chord={chord} setChordAtIndex={setChordAtIndex} deleteChordAtIndex={deleteChordAtIndex} />)}
+        </div>
         <div>
             <button onClick={() => { setChords(c => ([...c, {}])) }}>Add chord</button>
         </div>

@@ -3,7 +3,7 @@ import { PianoChord, Note } from '../notes/note';
 
 /** Piano Bed Component */
 export const Piano: React.FC<PianoProps> = props => {
-    const { onNoteClicked, flex, chord } = props;
+    const { onNoteClicked, flex, chord , color} = props;
     const baseNote = 60; // Middle C. This is hack and should be adjustable
     const octaves = 2;
     const steps: Key[] = ["W", "B", "W", "B", "W", "W", "B", "W", "B", "W", "B", "W"];
@@ -14,7 +14,7 @@ export const Piano: React.FC<PianoProps> = props => {
         for (let i = 0; i < octaves; i++) {
             bed.push(...steps.map((key, k) => {
                 let note: Note = baseNote + (i * 12) + k;
-                return <PianoKey key={note} note={note} keyType={key} width={bedLength} selected={chord?.[note]} onNoteClicked={onNoteClicked} />
+                return <PianoKey key={note} selectedColor={color} note={note} keyType={key} width={bedLength} selected={chord?.[note]} onNoteClicked={onNoteClicked} />
             }));
         }
 
@@ -38,7 +38,7 @@ export const Piano: React.FC<PianoProps> = props => {
 
 /** Piano Key Component */
 export const PianoKey: React.FC<PianoKeyProps> = props => {
-    const { note, keyType, selected, onNoteClicked, width } = props;
+    const { note, keyType, selected, onNoteClicked, width, selectedColor } = props;
 
     const onClick = React.useCallback(() => { onNoteClicked?.([note]) }, [note, onNoteClicked]);
 
@@ -60,7 +60,7 @@ export const PianoKey: React.FC<PianoKeyProps> = props => {
 
     const style = React.useMemo(() => ({
         width: keyType === "W" ? `calc(${100 / width}%)` : `calc(${50 / width}%)`,
-        backgroundColor: selected ? "lightblue" : (keyType === "W" ? "white" : "black"),
+        backgroundColor: selected ? (selectedColor || "lightblue") : (keyType === "W" ? "white" : "black"),
         border: "2px solid black",
         zIndex: keyType === "W" ? 2 : 3,
         marginRight: keyType === "W" ? -2 : `calc(-${25 / width}% - 1.5px)`,
@@ -92,6 +92,7 @@ export type onNoteClicked = (notes: Note[]) => void;
 export type Key = "W" | "B";
 
 export interface PianoKeyProps {
+    selectedColor?: string;
     note: Note;
     keyType: Key;
     selected?: boolean;
@@ -100,6 +101,7 @@ export interface PianoKeyProps {
 }
 
 export interface PianoProps {
+    color?: string;
     chord?: PianoChord;
     onNoteClicked?: onNoteClicked;
     flex?: "none" | "auto";
